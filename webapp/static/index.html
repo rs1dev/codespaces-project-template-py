@@ -40,6 +40,32 @@ img{
               </p>
               <button onclick="window.location.href='/docs'" type="button" class="btn btn-info">Try it out</button>
               <button onclick="window.location.href='https://github.com/microsoft/codespaces-project-template-py/'" type="button" class="btn btn-info">Project source</button>
+              <!-- create an interactive form with text input and button, and add event listener to send 
+              a POST to generate endpoint and display the response in a new div with the id "result"-->
+              <form id="form">
+                <input type="text" id="input" placeholder="Enter a name">
+                <button type="submit" class="btn btn-info">Generate</button>
+              </form>
+              <div id="result"></div>
+              <script>
+                const form = document.getElementById('form');
+                form.addEventListener('submit', (e) => {
+                  e.preventDefault();
+                  const input = document.getElementById('input').value;
+                  fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name: input })
+                  })
+                    .then(response => response.json())
+                    .then(data => {
+                      const result = document.getElementById('result');
+                      result.innerHTML = `<p>${data.message}</p>`;
+                    });
+                });
+              </script>
             </div>
           </div>
         </div>
