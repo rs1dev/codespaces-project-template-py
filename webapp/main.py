@@ -17,6 +17,9 @@ app.mount("/ui", StaticFiles(directory=static_path), name="ui")
 class Body(BaseModel):
     length: Union[int, None] = 20
 
+class HashBody(BaseModel):
+    text: str
+
 
 @app.get('/')
 def root():
@@ -35,3 +38,16 @@ def generate(body: Body):
     """
     string = base64.b64encode(os.urandom(64))[:body.length].decode('utf-8')
     return {'token': string}
+
+# Create a new endpoint to compute the hash value of a string and return it
+@app.post('/hash')
+def hash(body: HashBody):
+    """
+    Generate a hash value of a string. Example POST request body:
+
+    {
+        "text": "Hello World"
+    }
+    """
+    string = base64.b64encode(body.text.encode('utf-8'))
+    return {'hash': string}
