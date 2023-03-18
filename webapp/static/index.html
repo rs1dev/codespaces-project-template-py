@@ -43,7 +43,7 @@ img{
               <!-- create an interactive form with text input and button, and add event listener to send 
               a POST to generate endpoint and display the response in a new div with the id "result"-->
               <form id="form">
-                <input type="text" id="input" placeholder="Enter a name">
+                <input type="text" id="input" placeholder="Enter a number">
                 <button type="submit" class="btn btn-info">Generate</button>
               </form>
               <div id="result"></div>
@@ -57,12 +57,12 @@ img{
                     headers: {
                       'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ name: input })
+                    body: JSON.stringify({ length: input })
                   })
                     .then(response => response.json())
                     .then(data => {
                       const result = document.getElementById('result');
-                      result.innerHTML = `<p>${data.message}</p>`;
+                      result.innerHTML = `<p>${data.token}</p>`;
                     });
                 });
               </script>
